@@ -23,7 +23,7 @@ class ChatBar extends Component {
             <input onKeyPress={this.handleMessageSubmission} name="content" className="chatbar-message" placeholder="Type a message and hit ENTER" />
         </footer>
     )
-}
+    }
 }
 
 export default ChatBar;
