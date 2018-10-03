@@ -23,26 +23,29 @@ class App extends Component {
   }
   
   addMessage(username, content){
-    const randomId = Math.random().toString(36).substr(2, 5);
     console.log("add new message");
     let newMessage = {
-      id: randomId,
       username: username,
       content: content
     }
-    this.setState({
-      messages: [...this.state.messages, newMessage]
-    })
     this.socket.send(JSON.stringify(newMessage));
   }
-
+  
   // in App.jsx
-componentDidMount() {
-  this.socket = new WebSocket("ws://localhost:3001/");
+  componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3001/");
     this.socket.onopen = (event) => {
       console.log('connected to the server');
-      this.socket.send("Here's some text that the server is urgently awaiting!");
+      // this.socket.send("Here's some text that the server is urgently awaiting!");
     };
+    
+    this.socket.onmessage = (event) => {
+      let newMsg = JSON.parse(event.data); //event.data is stringified obj
+      this.setState({
+        messages: [...this.state.messages, newMsg]
+      })
+    console.log("----", event, event.data);
+  }
 
   console.log("componentDidMount <App />");
   setTimeout(() => {
