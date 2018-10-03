@@ -19,6 +19,7 @@ class App extends Component {
     ]
   }
   this.socket;
+  this.changeUsername = this.changeUsername.bind(this);
   this.addMessage = this.addMessage.bind(this);
   }
   
@@ -31,6 +32,11 @@ class App extends Component {
     this.socket.send(JSON.stringify(newMessage));
   }
   
+  changeUsername(username){
+    this.setState({
+      currentUser: {name: username}
+    })
+  }
   // in App.jsx
   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001/");
@@ -66,7 +72,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/>
+        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} changeUsername={this.changeUsername}/>
       </div>
     );
   }
