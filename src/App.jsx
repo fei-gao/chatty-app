@@ -7,6 +7,7 @@ class App extends Component {
   super(props);
   this.state =  {
     currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
+    connection: 0,
     messages: [
       { type: 'incomingMessage',
         id: 1,
@@ -81,6 +82,10 @@ class App extends Component {
         })
         break;
         
+        case 'connect':
+        this.setState({
+          connection: parsed.num
+        })
         default:
          // show an error in the console if the message type is unknown
          throw new Error("Unknown event type " + data.type);
@@ -97,7 +102,9 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
+          <a href="/" className="navbar-brand">Chatty
+          </a>
+          <span className="connection-num">{this.state.connection} users online</span>
         </nav>
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} changeUsername={this.changeUsername}/>
