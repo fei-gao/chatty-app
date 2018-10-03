@@ -1,16 +1,12 @@
-// (props) => {
-//     return (
-//         {props.messages.map(message => <Message />)}
-//     )
-// }
 import React, {Component} from 'react';
 import Message from './Message.jsx';
 
 class MessageList extends Component {
   render() {
-    const messages = this.props.messages.map(message => (
+    console.log("hello world");
+    const messages = this.props.messages.map(message => 
       <Message key={message.id} message={message}/>
-    ));
+    )
     return (
         <div className="messages">
         {messages}
