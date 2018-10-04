@@ -23,6 +23,9 @@ npm start
 open http://localhost:3000
 ```
 
+### Screenshot
+![Screenshot of chatty app](https://github.com/fei-gao/chatty-app/blob/master/docs/chatty-app.png)
+
 ### Static Files
 
 You can store static files like images, fonts, etc in the `build` folder.
@@ -44,5 +47,3 @@ npm run lint
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
-### Screenshot
-![Screenshot of chatty app](https://github.com/fei-gao/chatty-app/blob/master/docs/chatty-app.png)

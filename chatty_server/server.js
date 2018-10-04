@@ -38,6 +38,14 @@ const notificationConstructor = function(notification){
     return newNotification;
 }
 
+const broadcast = function(data){
+    wss.clients.forEach((client) => {
+        if(client.readyState === WebSocket.OPEN){
+            client.send(JSON.stringify(data));
+        }
+    })
+}
+
 const assignColor = function(){
      return '#'+((1<<24)*Math.random()|0).toString(16)
 }
@@ -48,51 +56,22 @@ const clients = [];
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
     clients.push(ws);
-    console.log("color from server", assignColor());
-    ws.send(JSON.stringify({type: 'assignColor', color: assignColor()}))
-    console.log('+++++++++++', clients.length , 'Clients connected');
-  wss.clients.forEach((client) => {
-      if(client.readyState === WebSocket.OPEN){
-          client.send(JSON.stringify({type:'connect', num:clients.length}))
-      }
-  })
+    ws.send(JSON.stringify({type: 'assignColor', color: assignColor()}));
+    broadcast({type:'connect', num:clients.length});
 
   ws.on('message', function incoming(data){
       if(JSON.parse(data).type === 'postNotification'){
-        console.log("================", JSON.parse(data)); 
         let notificationObj = notificationConstructor(JSON.parse(data));
-        wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(notificationObj));
-              }
-          });
+        broadcast(JSON.stringify(notificationObj));
       } else if(JSON.parse(data).type === 'postMessage'){
-          console.log('=======', JSON.parse(data));
         let msgObj = msgConstructor(JSON.parse(data));
-
-          wss.clients.forEach((client) => {
-              if (client.readyState === WebSocket.OPEN) {
-                  client.send(JSON.stringify(msgObj));
-                }
-            });
+        broadcast(JSON.stringify(msgObj));
       }
-    //   let msgObj = msgConstructor(JSON.parse(message));
-    //   wss.clients.forEach((client) => {
-    //       if (client.readyState === WebSocket.OPEN) {
-    //           client.send(JSON.stringify(msgObj));
-    //         }
-    //     });
-    //   console.log('=======received: %s', message, msgObj,JSON.stringify(msgObj));
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
       clients.pop();
-      wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({type:'connect', num:clients.length}));
-          }
+      broadcast(JSON.stringify({type:'connect', num:clients.length}));
       })
-      console.log('+++++++++++', clients.length , 'Client connected');
       console.log('Client disconnected')
-  });
 });

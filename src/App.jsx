@@ -9,7 +9,7 @@ class App extends Component {
     currentUser: {
       name: 'Anonymous',
       color: '#FFFFFF'
-    }, // optional. if currentUser is not defined, it means the user is Anonymous
+    }, 
     connection: 0,
     messages: [
       { type: 'incomingMessage',
@@ -32,7 +32,6 @@ class App extends Component {
   }
   
   addMessage(username, content, color){
-    console.log("add new message");
     let newMessage = {
       type: 'postMessage',
       username: username,
@@ -57,27 +56,14 @@ class App extends Component {
   }
   // in App.jsx
   componentDidMount() {
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-    //   // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
-    //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
-    //   this.setState({messages: messages})
-    // }, 3000);
-    console.log("componentDidMount <App />");
     this.socket = new WebSocket("ws://localhost:3001/");
-    
     this.socket.onopen = (event) => {
       console.log('connected to the server');
-      // this.socket.send("Here's some text that the server is urgently awaiting!");
     };
     
     this.socket.onmessage = (event) => {
-      console.log(event);
       let parsed = JSON.parse(event.data); //event.data is stringified obj
-      console.log("parsed---------", parsed.type);
+      // console.log("parsed---------", parsed.type);
       switch(parsed.type){
         case 'incomingMessage':
         this.setState({
@@ -104,7 +90,6 @@ class App extends Component {
             color: parsed.color
           }
         })
-        console.log("colorrrrrrr", this.state.currentUser, parsed.color);
         break; 
 
         default:
@@ -113,8 +98,6 @@ class App extends Component {
         }
       }
   }
-
-
 
   render() {
     return (
