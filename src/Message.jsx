@@ -17,8 +17,8 @@ class Message extends Component {
     return (
       <div>
         {(this.props.message.type == 'incomingMessage') ?
-           (<div className='message'>
-            <span className="message-username">{this.props.message.username}</span>
+           (<div style={{color:this.props.message.color}} className='message'>
+            <span className="message-username" > {this.props.message.username}{this.props.color}</span>
             <span className="message-content">{this.props.message.content}</span>
             </div>) :
             (<div className="notification">

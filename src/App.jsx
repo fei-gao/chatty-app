@@ -6,18 +6,23 @@ class App extends Component {
   constructor(props){
   super(props);
   this.state =  {
-    currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
+    currentUser: {
+      name: 'Anonymous',
+      color: '#FFFFFF'
+    }, // optional. if currentUser is not defined, it means the user is Anonymous
     connection: 0,
     messages: [
       { type: 'incomingMessage',
         id: 1,
         username: 'Bob',
         content: 'Has anyone seen my marbles?',
+        color: '#FF0000'
       },
       { type: 'incomingMessage',
         id: 2,
         username: 'Anonymous',
-        content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
+        content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
+        color: '#00FF00'
       }
     ]
   }
@@ -26,19 +31,23 @@ class App extends Component {
   this.addMessage = this.addMessage.bind(this);
   }
   
-  addMessage(username, content){
+  addMessage(username, content, color){
     console.log("add new message");
     let newMessage = {
       type: 'postMessage',
       username: username,
-      content: content
+      content: content,
+      color: color
     }
     this.socket.send(JSON.stringify(newMessage));
   }
   
-  changeUsername(username){
+  changeUsername(username, color){
     this.setState({
-        currentUser: {name: username}
+        currentUser: {
+          name: username,
+          color: color
+        }
     })
     let notification = {
       type: 'postNotification',
@@ -86,13 +95,22 @@ class App extends Component {
         this.setState({
           connection: parsed.num
         })
+        break;
+
+        case 'assignColor':
+        this.setState({
+          currentUser: {
+            name: this.state.currentUser.name,
+            color: parsed.color
+          }
+        })
+        console.log("colorrrrrrr", this.state.currentUser, parsed.color);
+        break; 
+
         default:
          // show an error in the console if the message type is unknown
-         throw new Error("Unknown event type " + data.type);
+         throw new Error("Unknown event type " + parsed.type);
         }
-        
-        console.log("----", event, event.data);
-        console.log(this.state);
       }
   }
 

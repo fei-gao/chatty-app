@@ -10,7 +10,8 @@ class ChatBar extends Component {
     handleChangeUsername(event){
         if(event.key === 'Enter'){
             let username = event.target;
-            this.props.changeUsername(username.value);
+            let color = this.props.currentUser.color;
+            this.props.changeUsername(username.value, color);
         }
     }
 
@@ -18,7 +19,8 @@ class ChatBar extends Component {
         if(event.key === 'Enter'){
             let username = this.props.currentUser.name;
             let content = event.target;
-            this.props.addMessage(username, content.value);
+            let color = this.props.currentUser.color;
+            this.props.addMessage(username, content.value, color);
             content.value = '';
         }
     }
