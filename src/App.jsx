@@ -22,7 +22,7 @@ class App extends Component {
         id: 2,
         username: 'Anonymous',
         content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
-        color: '#00FF00'
+        color: '#0000FF'
       }
     ]
   }
