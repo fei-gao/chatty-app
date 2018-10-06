@@ -34,9 +34,9 @@ class App extends Component {
   addMessage(username, content, color){
     let newMessage = {
       type: 'postMessage',
-      username: username,
-      content: content,
-      color: color
+      username,
+      content,
+      color
     }
     this.socket.send(JSON.stringify(newMessage));
   }
@@ -45,7 +45,7 @@ class App extends Component {
     this.setState({
         currentUser: {
           name: username,
-          color: color
+          color
         }
     })
     let notification = {
@@ -54,13 +54,14 @@ class App extends Component {
     }
     this.socket.send(JSON.stringify(notification));
   }
-  // in App.jsx
+ 
   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001/");
     this.socket.onopen = (event) => {
       console.log('connected to the server');
     };
     
+    // change state after receiving message from websocket server
     this.socket.onmessage = (event) => {
       let parsed = JSON.parse(event.data); //event.data is stringified obj
       // console.log("parsed---------", parsed.type);
