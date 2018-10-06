@@ -17,8 +17,14 @@ import React from 'react';
 //   }
 // }
 
-
 const Message = ({message}) => {
+  const isImage = (message.content.match((/^(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)$/)))? 
+   (<span> 
+      <img src={message.content} alt="image"/>
+      {message.content} is Image
+    </span>) :
+    ( <span> {message.content} not Image </span> );
+
   return (
     <div>
         {
@@ -26,15 +32,17 @@ const Message = ({message}) => {
           (
             <div style={{color:message.color}} className='message'>
               <span className="message-username" > {message.username}</span>
-              <span className="message-content">{message.content}</span>
+              <span className="message-content">
+              {isImage}
+              </span>
             </div>
-            ) :
-            (
+          ) :
+          (
               <div className="notification">
                 <span className="notification-content"> {message.content} </span>
               </div>
-            )
-          }
+          )
+        }
       </div>
   )
 }

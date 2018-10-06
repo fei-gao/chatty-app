@@ -97,5 +97,10 @@ body {
     .connection-num{
       float: right;
       font-size: medium;
-      margin: 20px auto
+      margin: 20px auto;
+    }
+    img {
+      width: 100px;
+      max-width: 60%;
+      height: auto;
     }
