@@ -20,10 +20,9 @@ import React from 'react';
 const Message = ({message}) => {
   const isImage = (message.content.match((/^(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)$/)))? 
    (<span> 
-      <img src={message.content} alt="image"/>
-      {message.content} is Image
+      <img src={message.content}/>
     </span>) :
-    ( <span> {message.content} not Image </span> );
+    ( <span> {message.content} </span> );
 
   return (
     <div>
