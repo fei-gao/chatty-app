@@ -12,18 +12,18 @@ class App extends Component {
     }, 
     connection: 0,
     messages: [
-      { type: 'incomingMessage',
-        id: 1,
-        username: 'Bob',
-        content: 'Has anyone seen my marbles?',
-        color: '#FF0000'
-      },
-      { type: 'incomingMessage',
-        id: 2,
-        username: 'Anonymous',
-        content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
-        color: '#0000FF'
-      }
+      // { type: 'incomingMessage',
+      //   id: 1,
+      //   username: 'Bob',
+      //   content: 'Has anyone seen my marbles?',
+      //   color: '#FF0000'
+      // },
+      // { type: 'incomingMessage',
+      //   id: 2,
+      //   username: 'Anonymous',
+      //   content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
+      //   color: '#0000FF'
+      // }
     ]
   }
   this.socket;
